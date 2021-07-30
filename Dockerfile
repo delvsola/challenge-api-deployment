@@ -3,4 +3,4 @@ RUN mkdir app
 WORKDIR "/app/"
 COPY . .
 RUN pip3 install -r requirements.txt
-CMD ["waitress-serve", "--port=$PORT", "app:app"]
+CMD waitress-serve --port=${PORT} app:app
