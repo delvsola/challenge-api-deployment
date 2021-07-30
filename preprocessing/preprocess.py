@@ -1,12 +1,6 @@
 from typing import Dict
 import pandas as pd
-from flask import abort, jsonify
-
-
-def json_abort(status_code, data=None):
-    response = jsonify(data or {'error': 'There was an error'})
-    response.status_code = status_code
-    abort(response)
+from utils.utils import json_abort
 
 
 def _validate(data: dict) -> bool:
@@ -18,7 +12,7 @@ def _validate(data: dict) -> bool:
     ]
     for i in required:
         if i not in data:
-            abort(400, {"error": f"Missing required field {i}"})
+            json_abort(400, {"error": f"Missing required field {i}"})
     return True
 
 
