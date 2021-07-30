@@ -1,4 +1,6 @@
 from flask import Flask, request, abort, jsonify
+from preprocessing.preprocess import preprocess
+from predict.predict import predict
 
 app = Flask(__name__)
 
@@ -20,7 +22,10 @@ def _predict():
         # Parse data and send prediction
         data = request.get_json(force=True).get("data", None)
         if not data:
-            return {"error": "Invalid content."}, 400
+            return {"error": "Invalid content: Missing 'data'"}, 400
+        df = preprocess(data)
+        prediction = predict(df)
+        return {"prediction": "{:.2f}".format(prediction)}
 
     elif request.method == "GET":
         resp = "The POST method expects a JSON dictionary with a \"data\" " \
