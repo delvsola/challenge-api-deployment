@@ -1,8 +1,10 @@
 from flask import Flask, request, abort, jsonify
+from flask_cors import CORS
 from preprocessing.preprocess import preprocess
 from predict.predict import predict
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/', methods=['GET'])
